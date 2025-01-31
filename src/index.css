@@ -1,0 +1,230 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: monospace;
+}
+body{
+  background-color: rgb(5, 1, 40);
+  height: 100lvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.logo{
+  height: 50px;
+  width: 110px;
+}
+.input{
+  padding: 10px 10px ;
+  border-radius: 5px;
+  transition: all .4s;
+  background-color: transparent;
+  border: none;
+  border-bottom :1px solid white;
+  color: aliceblue;
+  outline: none;
+  width: 75vw;
+  font-size: 12px;
+}
+.label{
+  position: absolute;
+  color: rgba(240, 248, 255, 0.429);
+  top: 50%;
+  transform: translateY(-50%);
+  left: 5px;
+  transition: all .4s;
+  font-size: 12px;
+
+}
+.input:focus,.input:not(:placeholder-shown){
+  border:1px solid white
+}
+.inputBox{
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+  margin-top: 10px;
+}
+.input:focus + .label,
+.input:not(:placeholder-shown) +.label{
+  top: 0px;
+  color: aliceblue;
+  background: #000;
+  left: 10px;
+}
+.join{
+  padding: 5px 15px;
+  border-radius: 4px;
+  border: 2px solid black;
+  box-shadow: 1px 1px 4px .2px grey;
+  background-color: rgb(16, 165, 106);
+  color: aliceblue;
+  margin-top: 10px;
+  font-size:12px ;
+}
+.join:hover{
+  background-color: rgb(12, 118, 76);
+}
+.editorPage{
+  height: 100lvh;
+  width: 100vw;
+  display: flex;
+}
+.left{
+  width: 20vw;
+  height: 100lvh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(9, 21, 58);
+  box-shadow: 1px 0px 4px .5px grey;
+}
+.membersShow::-webkit-scrollbar {
+  width: 10px;
+}
+
+.membersShow::-webkit-scrollbar-thumb {
+  background: rgb(68, 75, 97);
+  border-radius: 6px;
+}
+
+.membersShow::-webkit-scrollbar-track {
+  background: transparent;
+}
+.right{
+  width: 80vw;
+}
+.CodeMirror{
+  font-size: 17px;
+  margin-left: 2px;
+}
+.right .buttons{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10lvh;
+  padding: 10px;
+}
+.filename{
+  border: 1px solid white;
+  background-color: transparent;
+  outline: none;
+  padding: 5px;
+  color: aliceblue;
+  border-radius: 5px;
+  margin-right: 4px;
+}
+select option {
+  font-size: 16px;
+  color: white;
+  background-color: rgb(68, 75, 97);
+  padding: 10px;
+  border-bottom: 1px solid white;
+}
+.rightButton{
+  padding: 5px;
+  border: none;
+  background-color: rgb(68, 75, 97);
+  color: white;
+  border-radius:50% ;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+
+
+.CodeMirror-vscrollbar::-webkit-scrollbar {
+  width: 12px; 
+  height: 10px; 
+}
+
+.CodeMirror-vscrollbar::-webkit-scrollbar-thumb {
+  background-color: #858484;
+  border-radius: 10px; 
+}
+
+.CodeMirror-vscrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #555; }
+
+.CodeMirror-vscrollbar::-webkit-scrollbar-track {
+  background-color: #222; 
+  border-radius: 10px;
+}
+.leftBtn:hover{
+  filter: brightness(85%);
+  cursor: pointer;
+}
+.run::after{
+  content: "Run Code";
+  background-color: #000;
+  padding: 5px;
+  font-size: 10px;
+  border: 1px solid white;
+  border-radius: 4px;
+  position: absolute;
+  top: 120%;
+  z-index: 100;
+  width: max-content;
+  opacity: 0;
+  transition: all .5s;
+}
+.run:hover::after{
+  opacity: 100;
+}
+.copy::after{
+  content: "Copy";
+  background-color: #000;
+  padding: 5px;
+  font-size: 10px;
+  border: 1px solid white;
+  border-radius: 4px;
+  position: absolute;
+  top: 120%;
+  
+  z-index: 100;
+  width: max-content;
+  opacity: 0;
+  transition: all .5s;
+}
+.copy:hover::after{
+  opacity: 100;
+}
+.download::after{
+  content: "Download";
+  background-color: #000;
+  padding: 5px;
+  font-size: 10px;
+  border: 1px solid white;
+  border-radius: 4px;
+  position: absolute;
+  top: 120%;
+  z-index: 100;
+  width: max-content;
+  opacity: 0;
+  transition: all .5s;
+}
+.download:hover::after{
+  opacity: 100;
+}
+@media screen and (min-width: 768px){
+  .input{
+    width: 30vw;
+    font-size: 17px;
+  }
+  .label{
+    font-size: 17px;
+  }
+  .logo{
+    height: 80px;
+    width: 170px;
+  }
+  .join{
+    font-size: 17px;
+  }
+}
