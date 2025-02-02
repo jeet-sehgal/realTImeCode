@@ -7,7 +7,7 @@ import "codemirror/lib/codemirror.css";
 import CodeMirror from "codemirror";
 
 
-function Terminal({ socket, roomID, onSync,readOnly }) {
+function Terminal({ socket, roomID, onSync }) {
   const terminalRef = useRef(null);
 
   

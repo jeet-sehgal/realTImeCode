@@ -214,8 +214,11 @@ function Editor() {
             Copy the Room ID
           </button>
           <button
-            onClick={() => {
+            onClick={() => { 
+              ref.current.emit("refresh",editId)
               ref.current.disconnect();
+      
+
               nevigate("/");
             }}
             className="leftBtn"
