@@ -4,6 +4,7 @@ import React from "react";
 function Member({ name, id, admin, youId, adminId,kick }) {
   // console.log(allow)
   // console.log(youId)
+  
   return (
     <div style={{ marginBottom: "5px", position: "relative" }} key={id}>
       <Avatar name={name} size="40" round="10px" />

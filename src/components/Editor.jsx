@@ -11,7 +11,8 @@ function Editor() {
   const [filename, setFilename] = useState("");
   const [language, setLanguage] = useState("");
   const [uId,setUId]=useState(null)
-  
+  const[adminId,setAdminId]=useState("")
+
   const optionLang = ["C", "C++", "JAVA", "JavaScript", "PHP", "Python"];
   const optionLangDetail = {
     C: {
@@ -86,9 +87,10 @@ function Editor() {
         handel(err);
       });
       
-      ref.current.on("you", ({ id }) => {
+      ref.current.on("you", ({ id,admin ,adminName}) => {
         // console.log("Your socket ID is:", id);
-        
+        setAdminId(admin)
+        toast.success(`${adminName} is the admin`)
         setUId(id); 
     });
       ref.current.emit("join", { id: editId, name: location.state.username });
@@ -97,6 +99,10 @@ function Editor() {
         setMem((prev) => prev.filter((ele) => ele.id != id));
       });
       
+      ref.current.on("refresh",()=>{
+        window.location.reload()
+      })
+
       ref.current.on("joined", ({ name, socket, clients }) => {
         setMem(clients);
         // console.log(codeRef.current)
@@ -111,11 +117,11 @@ function Editor() {
         // }
       });
       ref.current.on("kickedOut",(id)=>{
-        console.log("hoi")
+        // console.log("hoi")
         nevigate("/")
         toast.error("Admin has kicked you out from chat room")
       })
-
+      
       function handel(err) {
         toast.error("Connection error, try again");
         nevigate("/");
@@ -123,6 +129,8 @@ function Editor() {
     }
     ini();
     return () => {
+      ref.current.emit("refresh",editId)
+      
       ref.current.disconnect();
     };
   }, []);
@@ -132,6 +140,7 @@ function Editor() {
     ref.current.emit("kick",id)
   }
 
+ 
   return (
     <div className="editorPage">
       <div className="left">

@@ -72,7 +72,8 @@ io.on("connection",(socket)=>{
                 io.to(ele).emit("joined",{name,socket:socket.id,clients})
             
         })
-        socket.emit("you",{id:socket.id})
+        socket.emit("you",{id:socket.id,admin:clients[0].id,adminName:userMap[clients[0].id]})
+        
         
     })
 
@@ -96,6 +97,10 @@ io.on("connection",(socket)=>{
             io.to(id).emit("code-change",{code});
             // console.log(code);
         }
+    })
+    
+    socket.on("refresh",(id)=>{
+        socket.in(id).emit("refresh",)
     })
 
     socket.on("disconnecting",()=>{

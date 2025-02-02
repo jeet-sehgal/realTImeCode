@@ -7,7 +7,7 @@ import "codemirror/lib/codemirror.css";
 import CodeMirror from "codemirror";
 
 
-function Terminal({ socket, roomID, onSync }) {
+function Terminal({ socket, roomID, onSync,readOnly }) {
   const terminalRef = useRef(null);
 
   
@@ -21,6 +21,7 @@ function Terminal({ socket, roomID, onSync }) {
           autoCloseBrackets: true,
           autoCloseTags: true,
           lineNumbers: true,
+          // readOnly
         }
       );
       terminalRef.current = editor;
@@ -53,6 +54,7 @@ function Terminal({ socket, roomID, onSync }) {
   return (
     <div style={{ height: "90lvh", width: "80vw" }}>
       <textarea
+        
         name=""
         id="editarea"
         style={{ borderRadius: "80px" }}
