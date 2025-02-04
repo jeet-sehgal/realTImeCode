@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import logo from "../images/ode_Book__1_-removebg-preview.png";
 import { useState } from "react";
 import { initSocket } from "../socket";
+import load from '../assets/load.gif'
 
 function Editor() {
   const ref = useRef(null);
@@ -53,6 +54,7 @@ function Editor() {
     },
   };
   const [output,setOutput]=useState("")
+  const [loading,setLoading]=useState(false)
   const [stdInput,setStdInput]=useState("")
   const codeRef = useRef(null);
   async function executeCode() {
@@ -67,10 +69,9 @@ function Editor() {
         script: codeRef.current,
         language: optionLangDetail[language].value,
         versionIndex: optionLangDetail[language].version,
-        clientId: "c1278a6a3f935c5953f6077ea5144b68",
-        clientSecret:
-          "bdbead16346fb998c1a5efa07d9f5f8f2c4bcd27f404666e7a533206b41cc0f9",
-        stdin: stdInput,
+        clientId: import.meta.env.VITE_CLIENT_ID,
+        clientSecret: import.meta.env.VITE_CLIENT_SECRET,
+        stdin: stdInput, 
       }),
     }).then((res) => res.json());
 
@@ -138,7 +139,7 @@ function Editor() {
       ref.current.disconnect();
     };
   }, []);
-  const [readOnly,setReadOnly]=useState(false)
+
   const [mem, setMem] = useState([]);
   function kick(id) {
     ref.current.emit("kick", id);
@@ -189,8 +190,7 @@ function Editor() {
                 youId={uId}
                 adminId={mem[0].id}
                 kick={kick}
-                edit={readOnly}
-                setEdit={setReadOnly}
+                
               />
             ))}
           </div>
@@ -295,8 +295,11 @@ function Editor() {
                   });
                   return;
                 } else {
+                  setLoading(true)
                   const data = await executeCode();
+                  console.log(data)
                   setOutput(data.output)
+                  setLoading(false)
                 }
               }}
             >
@@ -343,7 +346,7 @@ function Editor() {
             
           />
         </div>
-        {console.log("readonly ",readOnly)}
+        {/* {console.log("readonly ",readOnly)} */}
         <div
           className="runBox"
           style={{
@@ -393,6 +396,7 @@ function Editor() {
             style={{ color: "white", width: "40vw", border: "none",padding:"10px" }}
           >
             <h3>Output</h3>
+            {loading?<img src={load} alt="" style={{height:"15lvh"}}/>:""}
             <textarea
               name=""
               id=""

@@ -3,7 +3,8 @@ const app=express();
 const {Server} = require("socket.io");
 const http=require("http");
 const cors = require('cors');
-const axios=require("axios")
+const axios=require("axios");
+const  path= require("path");
 
 const server=http.createServer(app);
 const io=new Server(server,{
@@ -25,12 +26,16 @@ function all(id){
         name:userMap[ele],
         admin,
         
-        
+
     }
     })
     return clients
 }
 app.use(express.json());
+app.use(express.static('dist'))
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "dist", 'index.html'));
+});
 app.post("/exe",async (req,res)=>{
     // console.log("call")
     // console.log(req.body)
@@ -45,7 +50,7 @@ app.post("/exe",async (req,res)=>{
       }
 })
 io.on("connection",(socket)=>{
-    console.log("user ",socket.id)
+    // console.log("user ",socket.id)
     
     socket.on("join",({name,id})=>{
         userMap[socket.id]=name;
@@ -80,10 +85,10 @@ io.on("connection",(socket)=>{
 
     socket.on("kick",(id)=>{
         if (userMap[id]) {
-            console.log("Kicking user:", userMap[id]);
+            // console.log("Kicking user:", userMap[id]);
             io.to(id).emit("kickedOut",id );
         } else {
-            console.log("User  not found:", id);
+            // console.log("User  not found:", id);
         }
     })
 
@@ -120,7 +125,7 @@ io.on("connection",(socket)=>{
 })
 
 server.listen(3000,async ()=>{
-    console.log("server is started");
+    // console.log("server is started");
     
     
 })
