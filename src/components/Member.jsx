@@ -1,15 +1,20 @@
 import Avatar from "react-avatar";
 import React from "react";
 
-function Member({ name, id, admin, youId, adminId,kick }) {
+function Member({ name, id, admin, youId, adminId, kick}) {
   // console.log(allow)
   // console.log(youId)
-  
+  function nameManage(name){
+    if (name.length>9){
+      return name.slice(0,9)+"..."
+    }
+    return name
+  }
   return (
     <div style={{ marginBottom: "5px", position: "relative" }} key={id}>
       <Avatar name={name} size="40" round="10px" />
       <h4 style={{ color: "white", display: "inline", marginLeft: "5px" }}>
-        {name}
+        {nameManage(name)}
       </h4>
       {youId == id ? (
         <span style={{ color: "rgba(146, 146, 146, 0.735)" }}>(you)</span>
@@ -30,27 +35,26 @@ function Member({ name, id, admin, youId, adminId,kick }) {
       >
         {admin ? "ADMIN" : ""}
         {/* {console.log(id)} */}
-        {/* {console.log(adminId)} */}
+        {console.log(adminId)}
+        {/* {edit?<button><i class="fa-solid fa-text-slash"></i></button>:<button><i class="fa-solid fa-pencil"></i></button>} */}
         {youId == adminId ? (
           admin ? (
             ""
-          ) : (
-            <button
-              style={{
-                backgroundColor: "transparent",
-                color: "red",
-                cursor: "pointer",
-                border: "0px",
-              }}
-              onClick={()=>{
-                kick(id)
-              }}
-            >
-              <i class="fa-solid fa-person-walking-arrow-right"></i>
-            </button>
-          )
+          ) : <button
+          style={{
+            backgroundColor: "transparent",
+            color: "red",
+            cursor: "pointer",
+            border: "0px",
+          }}
+          onClick={() => {
+            kick(id);
+          }}
+        >
+          <i className="fa-solid fa-person-walking-arrow-right"></i>
+        </button>
         ) : (
-          console.log(adminId)
+          ""
         )}
       </h6>
     </div>

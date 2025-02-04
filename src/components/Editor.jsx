@@ -10,8 +10,8 @@ function Editor() {
   const nevigate = useNavigate();
   const [filename, setFilename] = useState("");
   const [language, setLanguage] = useState("");
-  const [uId,setUId]=useState(null)
-  const[adminId,setAdminId]=useState("")
+  const [uId, setUId] = useState(null);
+  // const[adminId,setAdminId]=useState("")
 
   const optionLang = ["C", "C++", "JAVA", "JavaScript", "PHP", "Python"];
   const optionLangDetail = {
@@ -52,6 +52,8 @@ function Editor() {
       ext: "py",
     },
   };
+  const [output,setOutput]=useState("")
+  const [stdInput,setStdInput]=useState("")
   const codeRef = useRef(null);
   async function executeCode() {
     console.log(codeRef.current);
@@ -68,15 +70,13 @@ function Editor() {
         clientId: "c1278a6a3f935c5953f6077ea5144b68",
         clientSecret:
           "bdbead16346fb998c1a5efa07d9f5f8f2c4bcd27f404666e7a533206b41cc0f9",
-        stdin: "",
+        stdin: stdInput,
       }),
     }).then((res) => res.json());
 
     return response;
   }
-  
 
- 
   useEffect(() => {
     async function ini() {
       ref.current = await initSocket();
@@ -86,28 +86,31 @@ function Editor() {
       ref.current.on("connect_failed", (err) => {
         handel(err);
       });
-      
-      ref.current.on("you", ({ id,admin ,adminName}) => {
+
+      ref.current.on("you", ({ id, admin, adminName }) => {
         // console.log("Your socket ID is:", id);
-        setAdminId(admin)
-        toast.success(`${adminName} is the admin`)
-        setUId(id); 
-    });
+        // setAdminId(admin)
+        toast.success(`${adminName} is the admin`);
+        setUId(id);
+      });
       ref.current.emit("join", { id: editId, name: location.state.username });
       ref.current.on("leave", ({ id, username }) => {
         toast.success(`${username} leaved the room`);
         setMem((prev) => prev.filter((ele) => ele.id != id));
+        
       });
-      
-      ref.current.on("refresh",()=>{
-        window.location.reload()
-      })
+
+      ref.current.on("refresh", (clients) => {
+        console.log("admin chala");
+        // setAdminId(mem[0].id)
+        window.location.reload();
+        setMem(clients);
+      });
 
       ref.current.on("joined", ({ name, socket, clients }) => {
         setMem(clients);
         // console.log(codeRef.current)
-        
-        
+
         ref.current.emit("code-sync", { code: codeRef.current, id: editId });
         if (name != location.state?.username) {
           toast.success(`${name} joined the room`);
@@ -116,12 +119,15 @@ function Editor() {
         //   setMem(prev=>prev.map(ele=>ele.name==location.state.username?Object.assign(ele, { you: true }):Object.assign(ele, { you: false })))
         // }
       });
-      ref.current.on("kickedOut",(id)=>{
+      ref.current.on("re", (clients) => {
+        setMem(clients);
+      });
+      ref.current.on("kickedOut", (id) => {
         // console.log("hoi")
-        nevigate("/")
-        toast.error("Admin has kicked you out from chat room")
-      })
-      
+        nevigate("/");
+        toast.error("Admin has kicked you out from chat room");
+      });
+
       function handel(err) {
         toast.error("Connection error, try again");
         nevigate("/");
@@ -129,18 +135,15 @@ function Editor() {
     }
     ini();
     return () => {
-      ref.current.emit("refresh",editId)
-      
       ref.current.disconnect();
     };
   }, []);
-
+  const [readOnly,setReadOnly]=useState(false)
   const [mem, setMem] = useState([]);
-  function kick(id){
-    ref.current.emit("kick",id)
+  function kick(id) {
+    ref.current.emit("kick", id);
   }
 
- 
   return (
     <div className="editorPage">
       <div className="left">
@@ -177,8 +180,18 @@ function Editor() {
               scrollBehavior: "smooth",
             }}
           >
+            {/* {mem.length!=0?setAdminId(mem[0].id):""} */}
             {mem.map((ele) => (
-              <Member id={ele.id} name={ele.name} admin={ele.admin} youId={uId} adminId={mem[0].id} kick={kick}/>
+              <Member
+                id={ele.id}
+                name={ele.name}
+                admin={ele.admin}
+                youId={uId}
+                adminId={mem[0].id}
+                kick={kick}
+                edit={readOnly}
+                setEdit={setReadOnly}
+              />
             ))}
           </div>
         </div>
@@ -214,10 +227,8 @@ function Editor() {
             Copy the Room ID
           </button>
           <button
-            onClick={() => { 
-              ref.current.emit("refresh",editId)
+            onClick={() => {
               ref.current.disconnect();
-      
 
               nevigate("/");
             }}
@@ -285,17 +296,20 @@ function Editor() {
                   return;
                 } else {
                   const data = await executeCode();
-                  console.log(data.output);
+                  setOutput(data.output)
                 }
               }}
             >
               <i class="fa-solid fa-play"></i>
             </button>
 
-            <button className="rightButton copy" onClick={()=>{
-              navigator.clipboard.writeText(codeRef.current);
-              toast.success("Code is copied");
-            }}>
+            <button
+              className="rightButton copy"
+              onClick={() => {
+                navigator.clipboard.writeText(codeRef.current);
+                toast.success("Code is copied");
+              }}
+            >
               <i class="fa-solid fa-copy"></i>
             </button>
 
@@ -318,14 +332,87 @@ function Editor() {
             </button>
           </div>
         </div>
-        <div className="terminal">
+        <div className="terminal" >
+
           <Terminal
             socket={ref}
             roomID={editId}
             onSync={(code) => {
               codeRef.current = code;
             }}
+            
           />
+        </div>
+        {console.log("readonly ",readOnly)}
+        <div
+          className="runBox"
+          style={{
+            height: "20lvh",
+            width: "80vw",
+            position: "absolute",
+            top: "80lvh",
+            display: "flex",
+            backgroundColor: "#081230",
+            marginLeft: "1px",
+          }}
+        >
+          <div
+            className="inputContainer"
+            style={{
+              color: "white",
+              width: "40vw",
+              border: "1px solid white",
+              border: "none",
+              borderRight: "1px solid white",
+              padding:"10px"
+            }}
+          >
+            <h3 >Input</h3>
+            <textarea
+            className="scroll"
+              name=""
+              id=""
+              placeholder="eg : input1/input2/input3"
+              style={{
+                padding: "10px",
+                backgroundColor: "transparent",
+                color: "white",
+                width: "25vw",
+                resize: "none",
+                width: "100%",
+                height: "15lvh",
+                border: "none",
+                outline: "none",
+              }}
+              value={stdInput}
+              onChange={(e)=>{setStdInput(e.target.value)}}
+            ></textarea>
+          </div>
+          <div
+            className="outputBox"
+            style={{ color: "white", width: "40vw", border: "none",padding:"10px" }}
+          >
+            <h3>Output</h3>
+            <textarea
+              name=""
+              id=""
+              value={output}
+              className="scroll"
+              placeholder="Output will be shown here"
+              style={{
+                backgroundColor: "transparent",
+                color: "white",
+                border: "none",
+                width: "25vw",
+                resize: "none",
+                width: "100%",
+                height: "15lvh",
+                outline: "none",
+                padding:"10px"
+              }}
+              readOnly={true}
+            ></textarea>
+          </div>
         </div>
       </div>
     </div>

@@ -25,6 +25,7 @@ function all(id){
         name:userMap[ele],
         admin,
         
+        
     }
     })
     return clients
@@ -99,19 +100,20 @@ io.on("connection",(socket)=>{
         }
     })
     
-    socket.on("refresh",(id)=>{
-        socket.in(id).emit("refresh",)
-    })
+    
 
     socket.on("disconnecting",()=>{
         const username=userMap[socket.id]
         const rooms = [...socket.rooms];
+        
         rooms.forEach((roomId) => {
             socket.in(roomId).emit("leave", {
                 id: socket.id,
-                username
+                username,
+              
             });
         });
+        
         socket.leave()
         delete userMap[socket.id]
     })

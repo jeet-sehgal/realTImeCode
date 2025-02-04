@@ -21,7 +21,7 @@ function Terminal({ socket, roomID, onSync }) {
           autoCloseBrackets: true,
           autoCloseTags: true,
           lineNumbers: true,
-          // readOnly
+          
         }
       );
       terminalRef.current = editor;
@@ -52,7 +52,8 @@ function Terminal({ socket, roomID, onSync }) {
   }, [socket.current]);
 
   return (
-    <div style={{ height: "90lvh", width: "80vw" }}>
+    <div style={{ height: "70lvh", width: "80vw" }}>
+      {/* {console.log("treminal toh ",readOnly)} */}
       <textarea
         
         name=""
