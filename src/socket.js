@@ -7,5 +7,5 @@ export async function initSocket(){
         timeout: 10000,
         transports: ['websocket'],
     };
-    return io("wss://localhost:3000",option)
+    return io("wss://https://realtimecode-ypcz.onrender.com/",option)
 }
