@@ -230,7 +230,9 @@ select option {
   background-color: #222; 
   border-radius: 10px;
 }
-
+.error{
+  color: red;
+}
 @media screen and (min-width: 768px){
   .input{
     width: 30vw;

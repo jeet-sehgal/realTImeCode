@@ -300,6 +300,12 @@ function Editor() {
                   setLoading(true)
                   const data = await executeCode();
                   console.log(data)
+                  if(data.error){
+                    setOutput(data.error)
+                    setLoading(false); 
+                    // console.log(output)
+                    return; 
+                  }
                   setOutput(data.output)
                   setLoading(false)
                 }
