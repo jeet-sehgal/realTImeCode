@@ -125,7 +125,7 @@ io.on("connection",(socket)=>{
 })
 
 server.listen(3000,async ()=>{
-    // console.log("server is started");
+    console.log("server is started");
     
     
 })
