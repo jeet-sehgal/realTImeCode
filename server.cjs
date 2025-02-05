@@ -123,8 +123,8 @@ io.on("connection",(socket)=>{
         delete userMap[socket.id]
     })
 })
-
-server.listen(3000,async ()=>{
+const PORT = process.env.PORT || 3000;
+server.listen(PORT,async ()=>{
     console.log("server is started");
     
     
