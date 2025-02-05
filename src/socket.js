@@ -19,5 +19,9 @@ export async function initSocket() {
         transports: ["websocket"],
     };
 
-    return io("wss://realtimecode-ypcz.onrender.com", options);
+    return io("wss://realtimecode-ypcz.onrender.com", { 
+        transports: ["websocket"], 
+        path: "/socket.io/" // Default Socket.io path
+    });
+    
 }
