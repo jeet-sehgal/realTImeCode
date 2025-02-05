@@ -58,8 +58,10 @@ function Editor() {
   const [stdInput,setStdInput]=useState("")
   const codeRef = useRef(null);
   async function executeCode() {
-    console.log(codeRef.current);
-    console.log(optionLangDetail[language].value);
+    // console.log(codeRef.current);
+    // console.log(optionLangDetail[language].value);
+    const input=stdInput.split("/n")
+    console.log(input.join("/"))
     const response = await fetch("/exe", {
       method: "POST",
       headers: {
@@ -71,7 +73,7 @@ function Editor() {
         versionIndex: optionLangDetail[language].version,
         clientId: import.meta.env.VITE_CLIENT_ID,
         clientSecret: import.meta.env.VITE_CLIENT_SECRET,
-        stdin: stdInput, 
+        stdin: input.join("\n"), 
       }),
     }).then((res) => res.json());
 
@@ -375,7 +377,7 @@ function Editor() {
             className="scroll"
               name=""
               id=""
-              placeholder="eg : input1/input2/input3"
+              placeholder="eg : input1&#10;     input2&#10;     input3"
               style={{
                 padding: "10px",
                 backgroundColor: "transparent",
