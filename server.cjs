@@ -50,7 +50,7 @@ app.post("/exe",async (req,res)=>{
       }
 })
 io.on("connection",(socket)=>{
-    // console.log("user ",socket.id)
+    console.log("user ",socket.id)
     
     socket.on("join",({name,id})=>{
         userMap[socket.id]=name;
