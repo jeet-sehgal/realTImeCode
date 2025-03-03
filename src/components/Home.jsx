@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "../context/homeForm";
 import logo from "../images/ode_Book__1_-removebg-preview.png";
 import { nanoid } from "nanoid";
@@ -10,6 +10,22 @@ function Home() {
   const [id,setId]=useState("");
   const [name,setName]=useState("");
   const nevigate=useNavigate()
+  useEffect(()=>{
+    
+    if(localStorage.getItem("uname")){
+      console.log("uname hai")
+      setName(localStorage.getItem("uname"))
+    }
+    else{
+      console.log("uname nahi hai")
+      
+
+
+    }
+  },[])
+  useEffect(()=>{
+    localStorage.setItem("uname",name)
+  },[name])
   return (
     <div
       style={{
@@ -35,7 +51,7 @@ function Home() {
           </label>
         </div>
         <div style={{ position: "relative" }}>
-          <input type="text" placeholder="" className="name input" id="name" value={name} onChange={(e)=>{setName(e.target.value)}} />
+          <input type="text" placeholder="" className="name input" id="name" value={name} onChange={(e)=>{setName(e.target.value)}} autoComplete="off" />
           <label htmlFor="name" className="label">
             Username
           </label>
