@@ -45,7 +45,7 @@ function Home() {
       </h4>
       <div className="inputBox">
         <div style={{ position: "relative" }}>
-          <input type="text" placeholder="" className="id input" id="id" value={id} onChange={(e)=>{setId(e.target.value)}} />
+          <input type="text" placeholder="" className="id input" id="id" value={id} onChange={(e)=>{setId(e.target.value)}} autoComplete="off"/>
           <label htmlFor="id" className="label">
             Room ID
           </label>
