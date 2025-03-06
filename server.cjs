@@ -31,6 +31,17 @@ function all(id){
     })
     return clients
 }
+function allEdit(id){
+    
+    const clients=Array.from(io.sockets.adapter.rooms.get(id)||[]).map(ele=>{
+        
+        
+       return {id:ele,
+        edit:userEdit[ele]
+    }
+    })
+    return clients
+}
 app.use(cors())
 app.use(express.json());
 app.use(express.static('dist'))
@@ -50,33 +61,23 @@ app.post("/exe",async (req,res)=>{
         res.status(error.response?.status || 500).json(error.response?.data || { error: "Internal server error" });
       }
 })
+const userEdit={}
 io.on("connection",(socket)=>{
     console.log("user ",socket.id)
     
     socket.on("join",({name,id})=>{
         userMap[socket.id]=name;
-        
+        userEdit[socket.id]=false;
         socket.join(id);
         const otherUser=Array.from(io.sockets.adapter.rooms.get(id)||[])
         const clients=all(id)
-        // client=clients.map(ele=>{
-        //     if(ele.id==socket.id){
-        //         Object.assign(ele, { you: true })
-        //     }
-        //     else{
-        //         if(you in ele){
-                   
-        //         }
-        //         else{
-
-        //         }
-        //         Object.assign(ele, { you: false })
-        //     }
-        // })
+        // console.log(userEdit)
+       const clientEdit=allEdit(id)
+       console.log(clientEdit)
         otherUser.forEach(ele=>{
                 // console.log(clients)
-            
-                io.to(ele).emit("joined",{name,socket:socket.id,clients})
+                // console.log(clientEdit)
+                io.to(ele).emit("joined",{name,socket:socket.id,clients,clientEdit})
             
         })
         socket.emit("you",{id:socket.id,admin:clients[0].id,adminName:userMap[clients[0].id]})

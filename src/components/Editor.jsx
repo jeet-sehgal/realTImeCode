@@ -110,10 +110,11 @@ function Editor() {
         setMem(clients);
       });
 
-      ref.current.on("joined", ({ name, socket, clients }) => {
+      ref.current.on("joined", ({ name, socket, clients ,clientEdit}) => {
         setMem(clients);
         // console.log(codeRef.current)
-
+        console.log("edit :",clientEdit)
+        // console.log("aa ja")
         ref.current.emit("code-sync", { code: codeRef.current, id: editId });
         if (name != location.state?.username) {
           toast.success(`${name} joined the room`);
