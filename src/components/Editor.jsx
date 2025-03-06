@@ -12,6 +12,7 @@ function Editor() {
   const [filename, setFilename] = useState("");
   const [language, setLanguage] = useState("");
   const [uId, setUId] = useState(null);
+  const [editable,setEditable] = useState([])
   // const[adminId,setAdminId]=useState("")
 
   const optionLang = ["C", "C++", "JAVA", "JavaScript", "PHP", "Python"];
@@ -113,7 +114,9 @@ function Editor() {
       ref.current.on("joined", ({ name, socket, clients ,clientEdit}) => {
         setMem(clients);
         // console.log(codeRef.current)
-        console.log("edit :",clientEdit)
+        setEditable(clientEdit)
+        console.log("edit :",editable)
+
         // console.log("aa ja")
         ref.current.emit("code-sync", { code: codeRef.current, id: editId });
         if (name != location.state?.username) {
