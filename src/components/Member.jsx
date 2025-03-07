@@ -51,7 +51,7 @@ function Member({ name, id, admin, youId, adminId, kick}) {
             kick(id);
           }}
         >
-          <i className="fa-solid fa-person-walking-arrow-right"></i>
+          <i class="fa-solid fa-text-slash"></i>
         </button>
         ) : (
           ""
