@@ -36,7 +36,26 @@ function Member({ name, id, admin, youId, adminId, kick}) {
         {admin ? "ADMIN" : ""}
         {/* {console.log(id)} */}
         {console.log(adminId)}
-        {youId==adminId?(admin?"":(<><button><i class="fa-solid fa-text-slash"></i></button><button><i class="fa-solid fa-pencil"></i></button></>)):""}
+        {/* {youId==adminId?(admin?"":(<><button><i class="fa-solid fa-text-slash"></i></button><button><i class="fa-solid fa-pencil"></i></button></>)):""} */}
+        {youId == adminId ? (
+          admin ? (
+            ""
+          ) : <button
+          style={{
+            backgroundColor: "transparent",
+            color: "red",
+            cursor: "pointer",
+            border: "0px",
+          }}
+          onClick={() => {
+            kick(id);
+          }}
+        >
+          <i className="fa-solid fa-person-walking-arrow-right"></i>
+        </button>
+        ) : (
+          ""
+        )}
         {youId == adminId ? (
           admin ? (
             ""
