@@ -36,7 +36,7 @@ function Member({ name, id, admin, youId, adminId, kick}) {
         {admin ? "ADMIN" : ""}
         {/* {console.log(id)} */}
         {console.log(adminId)}
-        {/* {edit?<button><i class="fa-solid fa-text-slash"></i></button>:<button><i class="fa-solid fa-pencil"></i></button>} */}
+        {youId==adminId?(admin?"":(<><button><i class="fa-solid fa-text-slash"></i></button><button><i class="fa-solid fa-pencil"></i></button></>)):""}
         {youId == adminId ? (
           admin ? (
             ""
