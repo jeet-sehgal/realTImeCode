@@ -101,6 +101,7 @@ function Editor() {
       ref.current.on("leave", ({ id, username }) => {
         toast.success(`${username} leaved the room`);
         setMem((prev) => prev.filter((ele) => ele.id != id));
+        setEditable((prev) => prev.filter((ele) => ele.id != id));
         
       });
 
