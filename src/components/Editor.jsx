@@ -102,7 +102,7 @@ function Editor() {
         toast.success(`${username} leaved the room`);
         setMem((prev) => prev.filter((ele) => ele.id != id));
         setEditable((prev) => prev.filter((ele) => ele.id != id));
-        
+        console.log(editable)
       });
 
       ref.current.on("refresh", (clients) => {
