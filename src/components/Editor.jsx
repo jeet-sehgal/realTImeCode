@@ -152,6 +152,17 @@ function Editor() {
   function kick(id) {
     ref.current.emit("kick", id);
   }
+  function setPencil(id){
+    console.log("hello",id)
+    setEditable(prev=>prev.map(ele=>{
+      if(ele.id==id){
+        ele.edit=!ele.edit
+        console.log(ele.id,"      ",ele.edit)
+      }
+      return ele
+    }))
+
+  }
 
   return (
     <div className="editorPage">
@@ -198,7 +209,8 @@ function Editor() {
                 youId={uId}
                 adminId={mem[0].id}
                 kick={kick}
-                
+                edit={editable.filter(element=>element.id==ele.id)}
+                setEdit={setPencil}
               />
             ))}
           </div>
@@ -357,7 +369,7 @@ function Editor() {
             onSync={(code) => {
               codeRef.current = code;
             }}
-            
+            edit={editable.filter(ele=>ele.id==uId)}
           />
         </div>
         {/* {console.log("readonly ",readOnly)} */}

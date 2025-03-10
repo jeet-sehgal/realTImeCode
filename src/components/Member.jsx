@@ -1,14 +1,14 @@
 import Avatar from "react-avatar";
 import React from "react";
 
-function Member({ name, id, admin, youId, adminId, kick}) {
+function Member({ name, id, admin, youId, adminId, kick, edit,setEdit }) {
   // console.log(allow)
   // console.log(youId)
-  function nameManage(name){
-    if (name.length>9){
-      return name.slice(0,9)+"..."
+  function nameManage(name) {
+    if (name.length > 9) {
+      return name.slice(0, 9) + "...";
     }
-    return name
+    return name;
   }
   return (
     <div style={{ marginBottom: "5px", position: "relative" }} key={id}>
@@ -36,42 +36,40 @@ function Member({ name, id, admin, youId, adminId, kick}) {
         {admin ? "ADMIN" : ""}
         {/* {console.log(id)} */}
         {console.log(adminId)}
-        {/* {youId==adminId?(admin?"":(<><button><i class="fa-solid fa-text-slash"></i></button><button><i class="fa-solid fa-pencil"></i></button></>)):""} */}
+        {console.log("data:", edit)}
         {youId == adminId ? (
           admin ? (
             ""
-          ) : <button
-          style={{
-            backgroundColor: "transparent",
-            color: "red",
-            cursor: "pointer",
-            border: "0px",
-          }}
-          onClick={() => {
-            kick(id);
-          }}
-        >
-          <i class="fa-solid fa-text-slash"></i>
-        </button>
+          ) : !edit.edit ? (
+            <button onClick={()=>{setEdit(id)}}>
+              <i class="fa-solid fa-text-slash"></i>
+            </button>
+          ) : (
+            <button onClick={setEdit(id)}>
+              <i class="fa-solid fa-pencil"></i>
+            </button>
+          )
         ) : (
           ""
         )}
         {youId == adminId ? (
           admin ? (
             ""
-          ) : <button
-          style={{
-            backgroundColor: "transparent",
-            color: "red",
-            cursor: "pointer",
-            border: "0px",
-          }}
-          onClick={() => {
-            kick(id);
-          }}
-        >
-          <i className="fa-solid fa-person-walking-arrow-right"></i>
-        </button>
+          ) : (
+            <button
+              style={{
+                backgroundColor: "transparent",
+                color: "red",
+                cursor: "pointer",
+                border: "0px",
+              }}
+              onClick={() => {
+                kick(id);
+              }}
+            >
+              <i className="fa-solid fa-person-walking-arrow-right"></i>
+            </button>
+          )
         ) : (
           ""
         )}
