@@ -1,7 +1,7 @@
 import Avatar from "react-avatar";
 import React from "react";
 
-function Member({ name, id, admin, youId, adminId, kick, edit,setEdit }) {
+function Member({ name, id, admin, youId, adminId, kick, edit, setEdit }) {
   // console.log(allow)
   // console.log(youId)
   function nameManage(name) {
@@ -41,11 +41,31 @@ function Member({ name, id, admin, youId, adminId, kick, edit,setEdit }) {
           admin ? (
             ""
           ) : !edit[0].edit ? (
-            <button onClick={()=>{setEdit(id)}}>
+            <button
+              onClick={() => {
+                setEdit(id);
+              }}
+              style={{
+                backgroundColor: "transparent",
+                color: "red",
+                marginRight: "10px",
+                border: "none",
+                cursor:"pointer",
+              }}
+            >
               <i class="fa-solid fa-text-slash"></i>
             </button>
           ) : (
-            <button onClick={()=>setEdit(id)}>
+            <button
+              onClick={() => setEdit(id)}
+              style={{
+                backgroundColor: "transparent",
+                cursor:"pointer",
+                color: "rgb(6, 215, 166)",
+                marginRight: "10px",
+                border: "none",
+              }}
+            >
               <i class="fa-solid fa-pencil"></i>
             </button>
           )
