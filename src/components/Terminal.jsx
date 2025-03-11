@@ -54,7 +54,7 @@ function Terminal({ socket, roomID, onSync,edit }) {
   return (
     <div style={{ height: "70lvh", width: "80vw" }}>
       {/* {console.log("treminal toh ",readOnly)} */}
-      {edit.edit?"":<div style={{height: "70lvh", width: "80vw",backgroundColor:"transparent",position:"absolute",top:"10lvh",zIndex:"100"}}></div>}
+      {edit.edit?"":<div style={{height: "70lvh", width: "80vw",backgroundColor:"green",position:"absolute",top:"10lvh",zIndex:"100"}}></div>}
       <textarea
         
         name=""
