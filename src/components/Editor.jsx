@@ -158,13 +158,11 @@ function Editor() {
   }
   function setPencil(id){
     console.log("hello",editable)
-    setEditable(prev=>prev.map(ele=>{
-      if(ele.id==id){
-        ele.edit=!ele.edit
-        console.log(ele.id,"      ",ele.edit)
-      }
-      return ele
-    }))
+    setEditable(prev =>
+      prev.map(ele =>
+        ele.id === id ? { ...ele, edit: !ele.edit } : ele
+      )
+    );
     ref.current.emit("edit",{id,editId})
   }
 
