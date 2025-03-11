@@ -5,6 +5,7 @@ import "codemirror/addon/edit/closetag";
 import "codemirror/addon/edit/closebrackets";
 import "codemirror/lib/codemirror.css";
 import CodeMirror from "codemirror";
+import toast from "react-hot-toast";
 
 function Terminal({ socket, roomID, onSync, edit }) {
   const terminalRef = useRef(null);
@@ -65,6 +66,9 @@ function Terminal({ socket, roomID, onSync, edit }) {
             position: "absolute",
             top: "10lvh",
             zIndex: "100",
+          }}
+          onClick={()=>{
+            toast.error("Admin has not allowed you to edit")
           }}
         ></div>
       )}

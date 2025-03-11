@@ -45,7 +45,7 @@ function Member({ name, id, admin, youId, adminId, kick, edit,setEdit }) {
               <i class="fa-solid fa-text-slash"></i>
             </button>
           ) : (
-            <button onClick={setEdit(id)}>
+            <button onClick={()=>setEdit(id)}>
               <i class="fa-solid fa-pencil"></i>
             </button>
           )
