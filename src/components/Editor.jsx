@@ -157,7 +157,7 @@ function Editor() {
     ref.current.emit("kick", id);
   }
   function setPencil(id){
-    console.log("hello",id)
+    console.log("hello",editId)
     setEditable(prev=>prev.map(ele=>{
       if(ele.id==id){
         ele.edit=!ele.edit
