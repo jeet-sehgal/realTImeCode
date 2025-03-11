@@ -52,12 +52,12 @@ function Terminal({ socket, roomID, onSync,edit }) {
   }, [socket.current]);
 
   useEffect(()=>{
-    console.log("terminal : ",edit[0].edit)
-  },[edit])
+    console.log("terminal : ",edit)
+  },[])
   return (
     <div style={{ height: "70lvh", width: "80vw" }}>
       {/* {console.log("treminal toh ",readOnly)} */}
-      {edit[0].edit?"":<div style={{height: "70lvh", width: "80vw",backgroundColor:"green",position:"absolute",top:"10lvh",zIndex:"100"}}></div>}
+      {edit.edit?"":<div style={{height: "70lvh", width: "80vw",backgroundColor:"green",position:"absolute",top:"10lvh",zIndex:"100"}}></div>}
       <textarea
         
         name=""
