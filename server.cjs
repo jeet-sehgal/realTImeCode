@@ -101,7 +101,7 @@ io.on("connection",(socket)=>{
         // client.forEach(ele=>{
         //     io.to(ele.id).emit("changeEdit",{client})
         // })
-        socket.in(editID).emit("changeEdit",{client})
+        socket.in(editId).emit("changeEdit",{client})
         console.log("data : ",client)
     })
 
