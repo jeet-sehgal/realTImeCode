@@ -101,6 +101,7 @@ io.on("connection",(socket)=>{
         client.forEach(ele=>{
             io.to(ele).emit("changeEdit",{client})
         })
+        console.log("data : ",client)
     })
 
     socket.on("code-change",({code,roomID})=>{

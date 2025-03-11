@@ -128,6 +128,7 @@ function Editor() {
         // }
       });
       ref.current.on("changeEdit",({client})=>{
+        console.log("data from server : ",client)
         setEditable(client)
       })
       ref.current.on("re", (clients) => {
