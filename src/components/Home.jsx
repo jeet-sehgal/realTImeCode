@@ -13,11 +13,11 @@ function Home() {
   useEffect(()=>{
     
     if(localStorage.getItem("uname")){
-      console.log("uname hai")
+      // console.log("uname hai")
       setName(localStorage.getItem("uname"))
     }
     else{
-      console.log("uname nahi hai")
+      // console.log("uname nahi hai")
       
 
 

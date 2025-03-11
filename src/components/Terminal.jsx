@@ -50,7 +50,7 @@ function Terminal({ socket, roomID, onSync, edit }) {
   }, [socket.current]);
 
   useEffect(() => {
-    console.log("terminal : ", edit);
+    // console.log("terminal : ", edit);
   }, []);
   return (
     <div style={{ height: "70lvh", width: "80vw" }}>

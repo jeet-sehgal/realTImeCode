@@ -62,7 +62,7 @@ function Editor() {
     // console.log(codeRef.current);
     // console.log(optionLangDetail[language].value);
     const input=stdInput.split("/n")
-    console.log(input.join("/"))
+    // console.log(input.join("/"))
     const response = await fetch("/exe", {
       method: "POST",
       headers: {
@@ -106,7 +106,7 @@ function Editor() {
       });
 
       ref.current.on("refresh", (clients) => {
-        console.log("admin chala");
+        // console.log("admin chala");
         // setAdminId(mem[0].id)
         window.location.reload();
         setMem(clients);
@@ -116,7 +116,7 @@ function Editor() {
         setMem(clients);
         // console.log(codeRef.current)
         setEditable(clientEdit)
-        console.log("edit :",editable)
+        // console.log("edit :",editable)
 
         // console.log("aa ja")
         ref.current.emit("code-sync", { code: codeRef.current, id: editId });
@@ -128,7 +128,7 @@ function Editor() {
         // }
       });
       ref.current.on("changeEdit",({client})=>{
-        console.log("data from server : ",client)
+        // console.log("data from server : ",client)
         setEditable(client)
       })
       ref.current.on("re", (clients) => {
@@ -150,14 +150,14 @@ function Editor() {
       ref.current.disconnect();
     };
   }, []);
-  useEffect(()=>{console.table(editable)},[editable])
+ 
 
   const [mem, setMem] = useState([]);
   function kick(id) {
     ref.current.emit("kick", id);
   }
   function setPencil(id){
-    console.log("hello",editable)
+    // console.log("hello",editable)
     setEditable(prev =>
       prev.map(ele =>
         ele.id === id ? { ...ele, edit: !ele.edit } : ele
@@ -217,7 +217,7 @@ function Editor() {
             ))}
           </div>
         </div>
-        {console.table(mem)}
+        
         <div
           style={{
             height: "15lvh",
@@ -319,7 +319,7 @@ function Editor() {
                 } else {
                   setLoading(true)
                   const data = await executeCode();
-                  console.log(data)
+                  // console.log(data)
                   if(data.error){
                     setOutput(data.error)
                     setLoading(false); 

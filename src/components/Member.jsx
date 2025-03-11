@@ -35,8 +35,8 @@ function Member({ name, id, admin, youId, adminId, kick, edit, setEdit }) {
       >
         {admin ? "ADMIN" : ""}
         {/* {console.log(id)} */}
-        {console.log(adminId)}
-        {console.log("data:", edit)}
+        {/* {console.log(adminId)} */}
+        {/* {console.log("data:", edit)} */}
         {youId == adminId ? (
           admin ? (
             ""
