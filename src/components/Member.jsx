@@ -40,7 +40,7 @@ function Member({ name, id, admin, youId, adminId, kick, edit,setEdit }) {
         {youId == adminId ? (
           admin ? (
             ""
-          ) : !edit.edit ? (
+          ) : !edit[0].edit ? (
             <button onClick={()=>{setEdit(id)}}>
               <i class="fa-solid fa-text-slash"></i>
             </button>

@@ -150,7 +150,7 @@ function Editor() {
       ref.current.disconnect();
     };
   }, []);
-  useEffect(()=>{console.log(editable)},[editable])
+  useEffect(()=>{console.table(editable)},[editable])
 
   const [mem, setMem] = useState([]);
   function kick(id) {
