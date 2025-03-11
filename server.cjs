@@ -5,6 +5,7 @@ const http=require("http");
 const cors = require('cors');
 const axios=require("axios");
 const  path= require("path");
+const { use } = require("react");
 
 const server=http.createServer(app);
 const io=new Server(server,{
@@ -92,6 +93,14 @@ io.on("connection",(socket)=>{
         } else {
             // console.log("User  not found:", id);
         }
+    })
+
+    socket.on("edit",({id,editId})=>{
+        userEdit[id]=!userEdit[id]
+        client=allEdit(editId)
+        client.forEach(ele=>{
+            io.to(ele).emit("changeEdit",{client})
+        })
     })
 
     socket.on("code-change",({code,roomID})=>{

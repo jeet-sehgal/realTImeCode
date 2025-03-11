@@ -127,6 +127,9 @@ function Editor() {
         //   setMem(prev=>prev.map(ele=>ele.name==location.state.username?Object.assign(ele, { you: true }):Object.assign(ele, { you: false })))
         // }
       });
+      ref.current.on("changeEdit",({client})=>{
+        setEditable(client)
+      })
       ref.current.on("re", (clients) => {
         setMem(clients);
       });
@@ -161,7 +164,7 @@ function Editor() {
       }
       return ele
     }))
-
+    ref.current.emit("edit",{id,editId})
   }
 
   return (
