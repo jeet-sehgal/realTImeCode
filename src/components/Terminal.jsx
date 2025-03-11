@@ -6,11 +6,9 @@ import "codemirror/addon/edit/closebrackets";
 import "codemirror/lib/codemirror.css";
 import CodeMirror from "codemirror";
 
-
-function Terminal({ socket, roomID, onSync,edit }) {
+function Terminal({ socket, roomID, onSync, edit }) {
   const terminalRef = useRef(null);
 
-  
   useEffect(() => {
     const start = () => {
       const editor = CodeMirror.fromTextArea(
@@ -21,7 +19,6 @@ function Terminal({ socket, roomID, onSync,edit }) {
           autoCloseBrackets: true,
           autoCloseTags: true,
           lineNumbers: true,
-          
         }
       );
       terminalRef.current = editor;
@@ -51,15 +48,28 @@ function Terminal({ socket, roomID, onSync,edit }) {
     }
   }, [socket.current]);
 
-  useEffect(()=>{
-    console.log("terminal : ",edit)
-  },[])
+  useEffect(() => {
+    console.log("terminal : ", edit);
+  }, []);
   return (
     <div style={{ height: "70lvh", width: "80vw" }}>
       {/* {console.log("treminal toh ",readOnly)} */}
-      {edit.edit?"":<div style={{height: "70lvh", width: "80vw",backgroundColor:"green",position:"absolute",top:"10lvh",zIndex:"100"}}></div>}
+      {edit.length > 0 && edit[0]?.edit ? (
+        ""
+      ) : (
+        <div
+          style={{
+            height: "70lvh",
+            width: "80vw",
+            backgroundColor: "green",
+            position: "absolute",
+            top: "10lvh",
+            zIndex: "100",
+          }}
+        ></div>
+      )}
+
       <textarea
-        
         name=""
         id="editarea"
         style={{ borderRadius: "80px" }}

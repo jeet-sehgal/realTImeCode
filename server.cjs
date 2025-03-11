@@ -98,9 +98,10 @@ io.on("connection",(socket)=>{
     socket.on("edit",({id,editId})=>{
         userEdit[id]=!userEdit[id]
         client=allEdit(editId)
-        client.forEach(ele=>{
-            io.to(ele.id).emit("changeEdit",{client})
-        })
+        // client.forEach(ele=>{
+        //     io.to(ele.id).emit("changeEdit",{client})
+        // })
+        socket.in(editID).emit("changeEdit",{client})
         console.log("data : ",client)
     })
 
