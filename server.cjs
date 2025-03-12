@@ -130,12 +130,12 @@ io.on("connection",(socket)=>{
     socket.on("disconnecting",()=>{
         const username=userMap[socket.id]
         const rooms = [...socket.rooms];
-        
+        clients=Array.from(io.sockets.adapter.rooms.get(id)||[])
         rooms.forEach((roomId) => {
             socket.in(roomId).emit("leave", {
                 id: socket.id,
                 username,
-              
+              admin:clients[1]
             });
         });
         
