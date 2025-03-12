@@ -68,7 +68,7 @@ io.on("connection",(socket)=>{
     
     socket.on("join",({name,id})=>{
         userMap[socket.id]=name;
-        const roomExists = io.sockets.adapter.rooms.get(roomId)?.size > 0;
+        const roomExists = io.sockets.adapter.rooms.get(id)?.size > 0;
         if (roomExists){
             userEdit[socket.id]=false;
         }
