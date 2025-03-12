@@ -98,8 +98,10 @@ function Editor() {
         setUId(id);
       });
       ref.current.emit("join", { id: editId, name: location.state.username });
-      ref.current.on("leave", ({ id, username,admin }) => {
-        console.log("a : ",admin)
+      ref.current.on("leave", ({ id, username }) => {
+        if(mem[0].id==id){
+          console.log("Admin chala")
+        }
         toast.success(`${username} leaved the room`);
         setMem((prev) => prev.filter((ele) => ele.id != id));
         setEditable((prev) => prev.filter((ele) => ele.id != id));
