@@ -70,7 +70,8 @@ function Member({ name, id, admin, youId, adminId, kick, edit, setEdit }) {
             </button>
           )
         ) : (
-          ""
+          // !edit[0].edit?<i class="fa-solid fa-eye"></i>:<i class="fa-solid fa-pencil"></i>
+          admin?"":!edit[0].edit?<i class="fa-solid fa-eye" style={{color:'red',}}></i>:<i class="fa-solid fa-pencil"></i>
         )}
         {youId == adminId ? (
           admin ? (

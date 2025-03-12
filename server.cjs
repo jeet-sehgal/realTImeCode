@@ -68,7 +68,14 @@ io.on("connection",(socket)=>{
     
     socket.on("join",({name,id})=>{
         userMap[socket.id]=name;
-        userEdit[socket.id]=false;
+        const roomExists = io.sockets.adapter.rooms.get(roomId)?.size > 0;
+        if (roomExists){
+            userEdit[socket.id]=false;
+        }
+        else{
+            userEdit[socket.id]=true;
+        }
+        
         socket.join(id);
         const otherUser=Array.from(io.sockets.adapter.rooms.get(id)||[])
         const clients=all(id)
