@@ -128,6 +128,7 @@ io.on("connection",(socket)=>{
     socket.on("adminChala",({editId,name,id})=>{
             userEdit[id]=true
             const clientEdit=allEdit(editId)
+            console.log(clientEdit)
             socket.in(editId).emit("adminChange",{name,clientEdit} );
         
     })
