@@ -125,8 +125,10 @@ io.on("connection",(socket)=>{
         }
     })
     
-    socket.on("adminChala",({editId})=>{
-        console.log(editId)
+    socket.on("adminChala",({editId,name})=>{
+        
+            socket.in(editId).emit("adminChange",{name} );
+        
     })
 
     socket.on("disconnecting",()=>{
