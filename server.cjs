@@ -50,14 +50,13 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "dist", 'index.html'));
 });
 app.post("/exe",async (req,res)=>{
-    // console.log("call")
-    // console.log(req.body)
+    
     try {
         const response = await axios.post("https://api.jdoodle.com/v1/execute", req.body, {
           headers: { "Content-Type": "application/json" },
         });
         res.json(response.data);
-        // console.log("api")
+       
       } catch (error) {
         res.status(error.response?.status || 500).json(error.response?.data || { error: "Internal server error" });
       }
@@ -79,12 +78,11 @@ io.on("connection",(socket)=>{
         socket.join(id);
         const otherUser=Array.from(io.sockets.adapter.rooms.get(id)||[])
         const clients=all(id)
-        // console.log(userEdit)
+       
        const clientEdit=allEdit(id)
-    //    console.log(clientEdit)
+   
         otherUser.forEach(ele=>{
-                // console.log(clients)
-                // console.log(clientEdit)
+               
                 io.to(ele).emit("joined",{name,socket:socket.id,clients,clientEdit})
             
         })
@@ -95,10 +93,10 @@ io.on("connection",(socket)=>{
 
     socket.on("kick",(id)=>{
         if (userMap[id]) {
-            // console.log("Kicking user:", userMap[id]);
+           
             io.to(id).emit("kickedOut",id );
         } else {
-            // console.log("User  not found:", id);
+            
         }
     })
 
@@ -109,11 +107,10 @@ io.on("connection",(socket)=>{
             io.to(ele.id).emit("changeEdit",{client})
         })
         // socket.in(editId).emit("changeEdit",{client})
-        // console.log("data : ",client)
     })
 
     socket.on("code-change",({code,roomID})=>{
-        // console.log(roomID);
+       
         if(code!=null){
         socket.in(roomID).emit("code-change",{code})}
     })
@@ -121,7 +118,7 @@ io.on("connection",(socket)=>{
         if(code!=null){
 
             io.to(id).emit("code-change",{code});
-            // console.log(code);
+           
         }
     })
     

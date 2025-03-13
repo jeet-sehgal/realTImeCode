@@ -126,10 +126,10 @@ function Editor() {
         //   setMem(prev=>prev.map(ele=>ele.name==location.state.username?Object.assign(ele, { you: true }):Object.assign(ele, { you: false })))
         // }
       });
-      ref.current.on("adminChange",(name,clientEdit)=>{
+      ref.current.on("adminChange",({name,clientEdit})=>{
         // console.log(name.name)
         console.log(clientEdit)
-        toast.success(`${name.name} is the new admin`)
+        toast.success(`${name} is the new admin`)
       })
       ref.current.on("changeEdit",({client})=>{
         // console.log("data from server : ",client)
