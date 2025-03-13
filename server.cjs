@@ -125,9 +125,10 @@ io.on("connection",(socket)=>{
         }
     })
     
-    socket.on("adminChala",({editId,name})=>{
-        
-            socket.in(editId).emit("adminChange",{name} );
+    socket.on("adminChala",({editId,name,id})=>{
+            userEdit[id]=true
+            const clientEdit=allEdit(editId)
+            socket.in(editId).emit("adminChange",{name,clientEdit} );
         
     })
 

@@ -126,8 +126,9 @@ function Editor() {
         //   setMem(prev=>prev.map(ele=>ele.name==location.state.username?Object.assign(ele, { you: true }):Object.assign(ele, { you: false })))
         // }
       });
-      ref.current.on("adminChange",(name)=>{
+      ref.current.on("adminChange",(name,clientEdit)=>{
         // console.log(name.name)
+        console.log(clientEdit)
         toast.success(`${name.name} is the new admin`)
       })
       ref.current.on("changeEdit",({client})=>{
@@ -164,7 +165,7 @@ function Editor() {
             ele.id === id ? { ...ele, admin: true } : ele 
           );
         });
-        ref.current.emit("adminChala",{editId,name:mem[0].name})
+        ref.current.emit("adminChala",{editId,name:mem[0].name,id:mem[0].id})
       }
     }
   }, [mem]);
