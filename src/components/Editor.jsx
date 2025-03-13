@@ -128,7 +128,7 @@ function Editor() {
       });
       ref.current.on("adminChange",({name,clientEdit})=>{
         // console.log(name.name)
-        console.log(clientEdit)
+        setEditable(clientEdit)
         toast.success(`${name} is the new admin`)
       })
       ref.current.on("changeEdit",({client})=>{
