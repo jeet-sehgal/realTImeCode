@@ -95,7 +95,7 @@ function Editor() {
       ref.current.on("you", ({ id, admin, adminName }) => {
         // console.log("Your socket ID is:", id);
         // setAdminId(admin)
-        console.log("you : : : ",admin)
+        // console.log("you : : : ",admin)
         // setBhai(admin)
         toast.success(`${adminName} is the admin`);
         setUId(id);
@@ -127,8 +127,8 @@ function Editor() {
         // }
       });
       ref.current.on("adminChange",(name)=>{
-        console.log(name)
-        toast.success(name," is the new admin")
+        // console.log(name.name)
+        toast.success(`${name.name} is the new admin`)
       })
       ref.current.on("changeEdit",({client})=>{
         // console.log("data from server : ",client)
