@@ -57,6 +57,7 @@ function Editor() {
   const [output,setOutput]=useState("")
   const [loading,setLoading]=useState(false)
   const [stdInput,setStdInput]=useState("")
+  // const [bhai,setBhai]=useState("")
   const codeRef = useRef(null);
   async function executeCode() {
     // console.log(codeRef.current);
@@ -94,26 +95,21 @@ function Editor() {
       ref.current.on("you", ({ id, admin, adminName }) => {
         // console.log("Your socket ID is:", id);
         // setAdminId(admin)
+        console.log("you : : : ",admin)
+        // setBhai(admin)
         toast.success(`${adminName} is the admin`);
         setUId(id);
       });
       ref.current.emit("join", { id: editId, name: location.state.username });
       ref.current.on("leave", ({ id, username }) => {
-        if(mem[0].id==id){
-          console.log("Admin chala")
-        }
+        
         toast.success(`${username} leaved the room`);
         setMem((prev) => prev.filter((ele) => ele.id != id));
         setEditable((prev) => prev.filter((ele) => ele.id != id));
-        
+      
       });
 
-      ref.current.on("refresh", (clients) => {
-        // console.log("admin chala");
-        // setAdminId(mem[0].id)
-        window.location.reload();
-        setMem(clients);
-      });
+      
 
       ref.current.on("joined", ({ name, socket, clients ,clientEdit}) => {
         setMem(clients);
@@ -134,9 +130,7 @@ function Editor() {
         // console.log("data from server : ",client)
         setEditable(client)
       })
-      ref.current.on("re", (clients) => {
-        setMem(clients);
-      });
+      
       ref.current.on("kickedOut", (id) => {
         // console.log("hoi")
         nevigate("/");
@@ -154,8 +148,25 @@ function Editor() {
     };
   }, []);
  
-
   const [mem, setMem] = useState([]);
+  useEffect(() => {
+    if (mem.length > 0) {
+      let id = mem[0].id;
+  
+      
+      if (!mem[0].admin) {
+        setMem(prev => {
+          return prev.map(ele => 
+            ele.id === id ? { ...ele, admin: true } : ele 
+          );
+        });
+        adminChange()
+      }
+    }
+  }, [mem]);
+  function adminChange(){
+    ref.current.emit("adminChala",{mem})
+  }
   function kick(id) {
     ref.current.emit("kick", id);
   }

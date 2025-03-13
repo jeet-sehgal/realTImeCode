@@ -81,7 +81,7 @@ io.on("connection",(socket)=>{
         const clients=all(id)
         // console.log(userEdit)
        const clientEdit=allEdit(id)
-       console.log(clientEdit)
+    //    console.log(clientEdit)
         otherUser.forEach(ele=>{
                 // console.log(clients)
                 // console.log(clientEdit)
@@ -109,7 +109,7 @@ io.on("connection",(socket)=>{
             io.to(ele.id).emit("changeEdit",{client})
         })
         // socket.in(editId).emit("changeEdit",{client})
-        console.log("data : ",client)
+        // console.log("data : ",client)
     })
 
     socket.on("code-change",({code,roomID})=>{
@@ -125,7 +125,9 @@ io.on("connection",(socket)=>{
         }
     })
     
-    
+    socket.on("adminChala",({mem})=>{
+        console.log(mem)
+    })
 
     socket.on("disconnecting",()=>{
         const username=userMap[socket.id]
