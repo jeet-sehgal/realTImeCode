@@ -125,8 +125,8 @@ io.on("connection",(socket)=>{
         }
     })
     
-    socket.on("adminChala",({mem})=>{
-        console.log(mem)
+    socket.on("adminChala",({editId})=>{
+        console.log(editId)
     })
 
     socket.on("disconnecting",()=>{

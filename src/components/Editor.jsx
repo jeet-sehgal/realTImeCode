@@ -160,13 +160,11 @@ function Editor() {
             ele.id === id ? { ...ele, admin: true } : ele 
           );
         });
-        adminChange()
+        ref.current.emit("adminChala",{editId})
       }
     }
   }, [mem]);
-  function adminChange(){
-    ref.current.emit("adminChala",{mem})
-  }
+  
   function kick(id) {
     ref.current.emit("kick", id);
   }
