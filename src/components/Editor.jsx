@@ -127,6 +127,7 @@ function Editor() {
         // }
       });
       ref.current.on("adminChange",(name)=>{
+        console.log(name)
         toast.success(name," is the new admin")
       })
       ref.current.on("changeEdit",({client})=>{
