@@ -38,6 +38,17 @@ function Terminal({ socket, roomID, onSync, edit }) {
     start();
   }, []);
 
+  const handleScroll = (event) => {
+    event.preventDefault(); 
+    
+
+    if (terminalRef.current) {
+      const scrollableElement = terminalRef.current.getScrollerElement();
+      scrollableElement.scrollTop += event.deltaY; 
+      scrollableElement.scrollLeft += event.deltaX; 
+    }
+  };
+
   useEffect(() => {
     if (socket.current) {
       socket.current.on("code-change", ({ code }) => {
@@ -62,7 +73,7 @@ function Terminal({ socket, roomID, onSync, edit }) {
           style={{
             height: "70lvh",
             width: "80vw",
-            backgroundColor: "green",
+            backgroundColor: "transparent",
             position: "absolute",
             top: "10lvh",
             zIndex: "100",
@@ -70,6 +81,7 @@ function Terminal({ socket, roomID, onSync, edit }) {
           onClick={()=>{
             toast.error("Admin has not allowed you to edit")
           }}
+          onWheel={handleScroll}
         ></div>
       )}
 
