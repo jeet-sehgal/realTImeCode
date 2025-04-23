@@ -2,8 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import Home from "./components/Home";
 import Editor from "./components/Editor";
-import { FormProvider } from "./context/homeForm";
-import { useState } from "react";
+
 import { Toaster } from "react-hot-toast";
 
 function App() {

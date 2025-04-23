@@ -3,6 +3,7 @@ import logo from "../images/ode_Book__1_-removebg-preview.png";
 import { useState } from "react";
 import { initSocket } from "../socket";
 import load from '../assets/load.gif'
+import compile from './compiler'
 
 function Editor() {
   const ref = useRef(null);
@@ -314,6 +315,7 @@ function Editor() {
                   </span>
                 </option>
               ))}
+              <option value="maggi">maggi</option>
             </select>
           </div>
 
@@ -335,6 +337,16 @@ function Editor() {
                   return;
                 } else {
                   setLoading(true)
+                  if(language=="maggi"){
+                    console.log("compiler toh laga le bhai")
+                    console.log(codeRef.current)
+                    const result = compile(codeRef.current)
+                    if (result != 1) {
+                      
+                      document.querySelector("#run").innerHTML = result;
+                    }
+                  }
+                  else{
                   const data = await executeCode();
                   // console.log(data)
                   if(data.error){
@@ -345,7 +357,7 @@ function Editor() {
                   }
                   setOutput(data.output)
                   setLoading(false)
-                }
+                }}
               }}
             >
               <i class="fa-solid fa-play"></i>
