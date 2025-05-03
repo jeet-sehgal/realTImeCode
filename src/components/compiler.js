@@ -97,7 +97,7 @@ function gen(tokens) {
         ele.value = "let";
       } else if (ele.value == "kaho") {
         ele.value =
-          "document.querySelector('#run').innerHTML+='<br/>> ';document.querySelector('#run').innerHTML+=";
+          "document.querySelector('#maggi').innerHTML+='<br/>> ';document.querySelector('#maggi').innerHTML+=";
       } else if (ele.value == "yadi") {
         ele.value = "if";
       } else if (ele.value == "varna") {

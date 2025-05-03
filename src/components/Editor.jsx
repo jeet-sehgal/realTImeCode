@@ -2,18 +2,20 @@ import React, { useEffect, useRef } from "react";
 import logo from "../images/ode_Book__1_-removebg-preview.png";
 import { useState } from "react";
 import { initSocket } from "../socket";
-import load from '../assets/load.gif'
-import compile from './compiler'
+import load from "../assets/load.gif";
+import compile from "./compiler";
 
 function Editor() {
   const ref = useRef(null);
   const { editId } = useParams();
+  const [maggiWidth,setMaggiWidth] = useState("0px")
+  const [maggiHeight,setMaggiHeight] = useState("0px")
   const location = useLocation();
   const nevigate = useNavigate();
   const [filename, setFilename] = useState("");
   const [language, setLanguage] = useState("");
   const [uId, setUId] = useState(null);
-  const [editable,setEditable] = useState([])
+  const [editable, setEditable] = useState([]);
   // const[adminId,setAdminId]=useState("")
 
   const optionLang = ["C", "C++", "JAVA", "JavaScript", "PHP", "Python"];
@@ -55,15 +57,15 @@ function Editor() {
       ext: "py",
     },
   };
-  const [output,setOutput]=useState("")
-  const [loading,setLoading]=useState(false)
-  const [stdInput,setStdInput]=useState("")
+  const [output, setOutput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [stdInput, setStdInput] = useState("");
   // const [bhai,setBhai]=useState("")
   const codeRef = useRef(null);
   async function executeCode() {
     // console.log(codeRef.current);
     // console.log(optionLangDetail[language].value);
-    const input=stdInput.split("/n")
+    const input = stdInput.split("/n");
     // console.log(input.join("/"))
     const response = await fetch("/exe", {
       method: "POST",
@@ -76,7 +78,7 @@ function Editor() {
         versionIndex: optionLangDetail[language].version,
         clientId: import.meta.env.VITE_CLIENT_ID,
         clientSecret: import.meta.env.VITE_CLIENT_SECRET,
-        stdin: input.join("\n"), 
+        stdin: input.join("\n"),
       }),
     }).then((res) => res.json());
 
@@ -103,19 +105,15 @@ function Editor() {
       });
       ref.current.emit("join", { id: editId, name: location.state.username });
       ref.current.on("leave", ({ id, username }) => {
-        
         toast.success(`${username} leaved the room`);
         setMem((prev) => prev.filter((ele) => ele.id != id));
         setEditable((prev) => prev.filter((ele) => ele.id != id));
-      
       });
 
-      
-
-      ref.current.on("joined", ({ name, socket, clients ,clientEdit}) => {
+      ref.current.on("joined", ({ name, socket, clients, clientEdit }) => {
         setMem(clients);
         // console.log(codeRef.current)
-        setEditable(clientEdit)
+        setEditable(clientEdit);
         // console.log("edit :",editable)
 
         // console.log("aa ja")
@@ -127,16 +125,16 @@ function Editor() {
         //   setMem(prev=>prev.map(ele=>ele.name==location.state.username?Object.assign(ele, { you: true }):Object.assign(ele, { you: false })))
         // }
       });
-      ref.current.on("adminChange",({name,clientEdit})=>{
+      ref.current.on("adminChange", ({ name, clientEdit }) => {
         // console.log(name.name)
-        setEditable(clientEdit)
-        toast.success(`${name} is the new admin`)
-      })
-      ref.current.on("changeEdit",({client})=>{
+        setEditable(clientEdit);
+        toast.success(`${name} is the new admin`);
+      });
+      ref.current.on("changeEdit", ({ client }) => {
         // console.log("data from server : ",client)
-        setEditable(client)
-      })
-      
+        setEditable(client);
+      });
+
       ref.current.on("kickedOut", (id) => {
         // console.log("hoi")
         nevigate("/");
@@ -153,35 +151,36 @@ function Editor() {
       ref.current.disconnect();
     };
   }, []);
- 
+
   const [mem, setMem] = useState([]);
   useEffect(() => {
     if (mem.length > 0) {
       let id = mem[0].id;
-  
-      
+
       if (!mem[0].admin) {
-        setMem(prev => {
-          return prev.map(ele => 
-            ele.id === id ? { ...ele, admin: true } : ele 
+        setMem((prev) => {
+          return prev.map((ele) =>
+            ele.id === id ? { ...ele, admin: true } : ele
           );
         });
-        ref.current.emit("adminChala",{editId,name:mem[0].name,id:mem[0].id})
+        ref.current.emit("adminChala", {
+          editId,
+          name: mem[0].name,
+          id: mem[0].id,
+        });
       }
     }
   }, [mem]);
-  
+
   function kick(id) {
     ref.current.emit("kick", id);
   }
-  function setPencil(id){
+  function setPencil(id) {
     // console.log("hello",editable)
-    setEditable(prev =>
-      prev.map(ele =>
-        ele.id === id ? { ...ele, edit: !ele.edit } : ele
-      )
+    setEditable((prev) =>
+      prev.map((ele) => (ele.id === id ? { ...ele, edit: !ele.edit } : ele))
     );
-    ref.current.emit("edit",{id,editId})
+    ref.current.emit("edit", { id, editId });
   }
 
   return (
@@ -229,13 +228,13 @@ function Editor() {
                 youId={uId}
                 adminId={mem[0].id}
                 kick={kick}
-                edit={editable.filter(element=>element.id==ele.id)}
+                edit={editable.filter((element) => element.id == ele.id)}
                 setEdit={setPencil}
               />
             ))}
           </div>
         </div>
-        
+
         <div
           style={{
             height: "15lvh",
@@ -336,28 +335,35 @@ function Editor() {
                   });
                   return;
                 } else {
-                  setLoading(true)
-                  if(language=="maggi"){
-                    console.log("compiler toh laga le bhai")
-                    console.log(codeRef.current)
-                    const result = compile(codeRef.current)
+                  setLoading(true);
+
+                  if (language == "maggi") {
+                    
+                    setMaggiHeight("15lvh")
+                    setMaggiWidth("calc(100% - 30px)")
+                    document.querySelector("#maggi").innerHTML = "";
+                    setOutput("");
+                    setLoading(false);
+                    const result = compile(codeRef.current);
+                    
                     if (result != 1) {
-                      
-                      document.querySelector("#run").innerHTML = result;
+                      document.querySelector("#maggi").innerHTML = result;
                     }
+                  } else {
+                    setMaggiHeight("0px")
+                    setMaggiWidth("0px")
+                    const data = await executeCode();
+                    // console.log(data)
+                    if (data.error) {
+                      setOutput(data.error);
+                      setLoading(false);
+                      // console.log(output)
+                      return;
+                    }
+                    setOutput(data.output);
+                    setLoading(false);
                   }
-                  else{
-                  const data = await executeCode();
-                  // console.log(data)
-                  if(data.error){
-                    setOutput(data.error)
-                    setLoading(false); 
-                    // console.log(output)
-                    return; 
-                  }
-                  setOutput(data.output)
-                  setLoading(false)
-                }}
+                }
               }}
             >
               <i class="fa-solid fa-play"></i>
@@ -392,15 +398,14 @@ function Editor() {
             </button>
           </div>
         </div>
-        <div className="terminal" >
-
+        <div className="terminal">
           <Terminal
             socket={ref}
             roomID={editId}
             onSync={(code) => {
               codeRef.current = code;
             }}
-            edit={editable.filter(ele=>ele.id==uId)}
+            edit={editable.filter((ele) => ele.id == uId)}
           />
         </div>
         {/* {console.log("readonly ",readOnly)} */}
@@ -424,12 +429,12 @@ function Editor() {
               border: "1px solid white",
               border: "none",
               borderRight: "1px solid white",
-              padding:"10px"
+              padding: "10px",
             }}
           >
-            <h3 >Input</h3>
+            <h3>Input</h3>
             <textarea
-            className="scroll"
+              className="scroll"
               name=""
               id=""
               placeholder="eg : input1&#10;     input2&#10;     input3"
@@ -445,15 +450,26 @@ function Editor() {
                 outline: "none",
               }}
               value={stdInput}
-              onChange={(e)=>{setStdInput(e.target.value)}}
+              onChange={(e) => {
+                setStdInput(e.target.value);
+              }}
             ></textarea>
           </div>
           <div
             className="outputBox"
-            style={{ color: "white", width: "40vw", border: "none",padding:"10px" }}
+            style={{
+              color: "white",
+              width: "40vw",
+              border: "none",
+              padding: "10px",
+            }}
           >
             <h3>Output</h3>
-            {loading?<img src={load} alt="" style={{height:"15lvh"}}/>:""}
+            {loading ? (
+              <img src={load} alt="" style={{ height: "15lvh" }} />
+            ) : (
+              ""
+            )}
             <textarea
               name=""
               id=""
@@ -469,10 +485,11 @@ function Editor() {
                 width: "100%",
                 height: "15lvh",
                 outline: "none",
-                padding:"10px"
+                padding: "10px",
               }}
               readOnly={true}
             ></textarea>
+             <div id="maggi" style={{width:maggiWidth,height:maggiHeight}}></div> 
           </div>
         </div>
       </div>
